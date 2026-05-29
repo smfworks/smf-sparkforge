@@ -1,0 +1,10 @@
+<Application x:Class="SparkForge.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SparkForge"
+             xmlns:converters="clr-namespace:SparkForge.Converters">
+    <Application.Resources>
+        <converters:RoleToAlignmentConverter x:Key="RoleToAlignment"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,107 @@
+<Window x:Class="SparkForge.Views.ModelDownloadDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Download Model" Height="500" Width="550"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="ToolWindow"
+        Background="#1e1e2e"
+        ResizeMode="NoResize">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0" Text="Download Model" FontSize="18" FontWeight="Bold"
+                   Foreground="#cdd6f4" Margin="0,0,0,12"/>
+
+        <!-- Search / Filter -->
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Search models from Ollama library" FontSize="12" Foreground="#a6adc8" Margin="0,0,0,8"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="SearchBox" Grid.Column="0"
+                         Background="#313244" Foreground="#cdd6f4"
+                         BorderBrush="#45475a" CaretBrush="#cdd6f4"
+                         Padding="10,6" FontSize="13"
+                         TextChanged="OnSearchTextChanged">
+                    <TextBox.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#585b70"/>
+                    </TextBox.Resources>
+                </TextBox>
+                <Button Grid.Column="1" Content="Refresh" Margin="8,0,0,0"
+                        Width="70" Height="30"
+                        Click="OnRefreshClick"
+                        Background="#45475a" Foreground="#cdd6f4"
+                        BorderBrush="#585b70" FontSize="12"/>
+            </Grid>
+        </StackPanel>
+
+        <!-- Model List -->
+        <Border Grid.Row="2" Margin="0,12,0,12" Background="#181825"
+                BorderBrush="#313244" BorderThickness="1" CornerRadius="6">
+            <ListView x:Name="ModelList" Background="Transparent" BorderThickness="0"
+                      Foreground="#cdd6f4"
+                      SelectionChanged="OnModelSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="8,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="{Binding Name}" FontSize="13" FontWeight="SemiBold"
+                                           Foreground="#cdd6f4"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <TextBlock Text="{Binding ParameterSize}" FontSize="11"
+                                               Foreground="#a6adc8" Margin="0,0,8,0"/>
+                                    <TextBlock Text="{Binding SizeFormatted}" FontSize="11"
+                                               Foreground="#585b70"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding Description}" FontSize="11"
+                                           Foreground="#6c7086" TextTrimming="CharacterEllipsis"
+                                           Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <Button Grid.Column="1" Content="Download" Width="80" Height="26"
+                                    Click="OnDownloadClick"
+                                    Tag="{Binding Name}"
+                                    Background="#89b4fa" Foreground="#1e1e2e"
+                                    BorderThickness="0" FontSize="11" FontWeight="SemiBold"
+                                    VerticalAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Border>
+
+        <!-- Progress -->
+        <Grid Grid.Row="3" Visibility="Collapsed" x:Name="ProgressPanel">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="ProgressLabel" Grid.Row="0" FontSize="12" Foreground="#a6adc8"
+                       Margin="0,0,0,4"/>
+            <ProgressBar x:Name="ProgressBar" Grid.Row="1" Height="8"
+                         Background="#313244" Foreground="#89b4fa"
+                         BorderThickness="0"/>
+        </Grid>
+
+        <!-- Close Button -->
+        <StackPanel Grid.Row="3" HorizontalAlignment="Right" Margin="0,12,0,0"
+                    x:Name="ButtonPanel">
+            <Button Content="Close" Width="80" Height="30"
+                    Click="OnCloseClick"
+                    Background="#45475a" Foreground="#cdd6f4"
+                    BorderBrush="#585b70" FontSize="12"/>
+        </StackPanel>
+    </Grid>
+</Window>
